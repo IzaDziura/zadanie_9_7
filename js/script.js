@@ -7,7 +7,11 @@ var pickRock = document.getElementById('js-playerPick_rock'),
     resultsElem = document.getElementById('js-resultsTableElement'),
     playerPointsElem = document.getElementById('js-playerPoints'),
     playerNameElem = document.getElementById('js-playerName'),
-    computerPointsElem = document.getElementById('js-computerPoints');
+    computerPointsElem = document.getElementById('js-computerPoints'),
+    playerPickElem = document.getElementById('js-playerPick'),
+    computerPickElem = document.getElementById('js-computerPick'),
+    playerResultElem = document.getElementById('js-playerResult'),
+    computerResultElem = document.getElementById('js-computerResult');
 
 function newGame() {
   player.name = prompt('Please enter your name', 'imię gracza');
@@ -36,9 +40,56 @@ function setGameElements() {
         pickElem.style.display = 'none';
         resultsElem.style.display = 'none';
   }
+  setGameElements();
 }
 
-setGameElements();
+function playerPick(playerPick) {
+	console.log(playerPick);
+}
+
+function getComputerPick() {
+    var possiblePicks = ['rock', 'paper', 'scissors'];
+    return possiblePicks[Math.floor(Math.random()*3)];
+}
+
+function playerPick(playerPick) {
+    var computerPick = getComputerPick();
+
+    playerPickElem.innerHTML = playerPick;
+    computerPickElem.innerHTML = computerPick;
+
+    checkRoundWinner(playerPick, computerPick);
+}
+
+function checkRoundWinner(playerPick, computerPick) {
+  playerResultElem.innerHTML = computerResultElem.innerHTML = '';
+
+  var winnerIs = 'player';
+
+    if (playerPick == computerPick) {
+        winnerIs = 'noone'; // remis
+    } else if (
+        (computerPick == 'rock' &&  playerPick == 'scissors') ||
+        (computerPick == 'scissors' &&  playerPick == 'paper') ||
+        (computerPick == 'paper' &&  playerPick == 'rock')) {
+
+        winnerIs = 'computer';
+    }
+
+    if (winnerIs == 'player') {
+        playerResultElem.innerHTML = "Win!";
+        player.score++;
+    } else if (winnerIs == 'computer') {
+        computerResultElem.innerHTML = "Win!";
+        computer.score++;
+    }
+
+}
+
+function setGamePoints() {
+    playerPointsElem.innerHTML = player.score;
+    computerPointsElem.innerHTML = computer.score;
+}
 
 newGameBtn.addEventListener('click', newGame);
 
