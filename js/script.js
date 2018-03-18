@@ -34,7 +34,7 @@ function setGameElements() {
         resultsElem.style.display = 'block';
       break;
     case 'ended':
-        newGameBtn.innerText = 'Jeszcze raz';
+        newGameBtn.innerText = 'One more time';
     case 'notStarted':
     default:
         newGameElem.style.display = 'block';
@@ -110,7 +110,8 @@ function checkRoundWinner(playerPick, computerPick) {
         computerResultElem.innerHTML = "Win!";
         computer.score++;
     }
-
+    setGamePoints();
+    endGame();
 }
 
 function playerPick(playerPick) {
@@ -128,10 +129,15 @@ function setGamePoints() {
     computerPointsElem.innerHTML = computer.score;
 }
 
-/*function endGame() {
+//Zakończenie gry
+function endGame() {
     if (player.score == 10) {
-        prompt ('Brawo ' + player.name);
+        alert ('Brawo ' + playerNameElem.innerHTML + ', you win!');
+        gameState = 'ended';
+        setGameElements();
     } else if (computer.score == 10) {
-        prompt ('Niestety, ale przegrałeś człowieku.');
+        alert ('Unfortunately, you lost!');
+        gameState = 'ended';
+        setGameElements();
     }
-}*/
+}
